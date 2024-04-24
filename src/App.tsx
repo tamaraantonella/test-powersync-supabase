@@ -14,7 +14,6 @@ function App() {
   const login = async () => {
     try {
       await supabase?.login("tamarafrazzetta@gmail.com", "admin123");
-      //await supabase?.init();
     } catch (error) {
       console.log("🚀🩷🥰​ ~ file: App.tsx:20 ~ login ~ error", error);
     }
@@ -24,7 +23,6 @@ function App() {
     try {
       powerSync?.getAll("SELECT * from pets")
         .then((value) => {
-          console.log("🚀🩷🥰​ ~ file: App.tsx:20 ~ getAllPets ~ value", value)
           setPets(value)
         });
 
