@@ -1,53 +1,87 @@
-import { usePowerSync } from "@powersync/react";
-import { useState } from "react";
+import { usePowerSync, usePowerSyncStatus } from "@powersync/react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./App.css";
-import reactLogo from "./assets/react.svg";
+import { PETS_TABLE, Pet } from "./db/AppSchema";
 import { useSupabase } from "./provider/SystemProvider";
-import viteLogo from "/vite.svg";
 
 function App() {
   const powerSync = usePowerSync();
-  const [pets, setPets] = useState<unknown[]>([]);
-
+  const [pets, setPets] = useState<Pet[]>([]);
   const supabase = useSupabase();
+  const status = usePowerSyncStatus();
 
   const login = async () => {
     try {
       await supabase?.login("tamarafrazzetta@gmail.com", "admin123");
     } catch (error) {
-      console.log("🚀🩷🥰​ ~ file: App.tsx:20 ~ login ~ error", error);
+      console.error("🚀🩷🥰​ ~ file: App.tsx:20 ~ login ~ error", error);
     }
   };
 
-  const handleQuery = () => {
+  const handleQuery = async () => {
     try {
-      powerSync?.getAll("SELECT * from pets")
-        .then((value) => {
-          setPets(value)
-        });
-
+      const pets = await powerSync?.getAll<Pet>(`SELECT * from ${PETS_TABLE}`);
+      setPets(pets);
     } catch (error) {
-      console.log("🚀🩷🥰​ ~ file: App.tsx:20 ~ login ~ error", error);
+      console.error("🚀🩷🥰​ ~ file: App.tsx:20 ~ login ~ error", error);
     }
-  }
+  };
+  useEffect(() => {}, [pets, powerSync]);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <Link to="/watched">
+        <p>Ir a watched</p>
+      </Link>
+
+      <div style={{ marginBottom: "15px", marginTop: "25px" }}>
+        Connected: {status.connected ? "wifi" : "wifi-off"}
       </div>
 
-      <button onClick={login}>Login</button>
-      <button onClick={handleQuery}>Pets</button>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <div style={{ marginBottom: "15px" }}>
+        <button onClick={login}>Login</button>
+        <button onClick={handleQuery}>Get Pets</button>
+      </div>
 
+      <div>
+        {pets?.map((pet: Pet) => (
+          <div
+            key={pet.id}
+            style={{ display: "flex", gap: "15px", alignItems: "center" }}
+          >
+            <p>{String(pet.name)}</p>
+            <button
+              onClick={async () => {
+                try {
+                  await powerSync.execute(
+                    `DELETE FROM ${PETS_TABLE} WHERE id = ?`,
+                    [pet.id]
+                  );
+                } catch (ex: any) {
+                  alert("Error: " + ex.message);
+                }
+              }}
+            >
+              Delete
+            </button>
+            <button
+              onClick={async () => {
+                try {
+                  await powerSync.execute(
+                    `UPDATE ${PETS_TABLE} SET name = ? WHERE id = ?`,
+                    [`${pet.name}2`, pet.id]
+                  );
+                } catch (ex: any) {
+                  alert("Error: " + ex.message);
+                }
+              }}
+            >
+              Update
+            </button>
+          </div>
+        ))}
+      </div>
     </>
   );
 }

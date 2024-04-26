@@ -147,6 +147,7 @@ export class SupabaseConnector
       for (const op of transaction.crud) {
         lastOp = op;
         const table = this.client.from(op.table);
+        console.log("🚀🩷🥰​ ~ file: Connector.ts:150 ~ uploadData ~ table:", table);
         let result: unknown;
         switch (op.op) {
           case UpdateType.PUT:
@@ -173,11 +174,15 @@ export class SupabaseConnector
             `Could not update Supabase. Received error: ${result.error}`
           );
         }
+        console.log("🚀🩷🥰​ ~ file: Connector.ts:178 ~ uploadData ~ result:", result);
       }
       console.log(
-        "🚀🩷🥰​ ~ file: Connector.ts:108 ~ SupabaseConnector ~ uploadData ~ transaction.complete);"
+        "🚀🩷🥰​ ~ file: Connector.ts:108 ~ SupabaseConnector ~ uploadData ~ transaction ABOUT TO COMPLETE;"
       );
       await transaction.complete();
+      console.log(
+        "🚀🩷🥰​ ~ file: Connector.ts:108 ~ SupabaseConnector ~ uploadData ~ transaction COMPLETED;"
+      );
     } catch (ex: unknown) {
       console.debug(ex);
       if (

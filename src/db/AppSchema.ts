@@ -1,5 +1,7 @@
 import { Column, ColumnType, Schema, Table } from "@powersync/web";
 
+export const PETS_TABLE = 'pets'
+
 export const AppSchema = new Schema([
   new Table({
     name: 'pets',
@@ -10,4 +12,7 @@ export const AppSchema = new Schema([
   })
 ])
 
+export type Database = (typeof AppSchema)['types']
+
+export type Pet = Database['pets']
 
