@@ -7,7 +7,7 @@ function Watched() {
 
   return (
     <div style={{ display: "flex", gap: "10px", flexDirection: "column" }}>
-      <Link to="/">Home</Link>
+      <Link to="/">Homee</Link>
       <div
         style={{
           width: "400px",
