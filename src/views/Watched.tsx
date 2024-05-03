@@ -18,14 +18,14 @@ function Watched() {
       >
         <p
           style={{
-            backgroundColor: "green",
+            backgroundColor: "pink",
           }}
         >
           WATCHED PETS
         </p>
         <div>
           {watch?.map((pet: Pet) => (
-            <div key={pet.id}>{String(pet.name)}</div>
+            <div key={pet.id}>{String(pet.name)}!!</div>
           ))}
         </div>
       </div>

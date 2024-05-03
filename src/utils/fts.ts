@@ -1,7 +1,7 @@
 import { Table } from '@powersync/web';
 import { ExtractType, generateJsonExtracts } from './helpers';
 import { AppSchema } from '../db/AppSchema';
-import { powerSync } from '../db/client';
+import { db } from '../db/client';
 
 /**
  * Create a Full Text Search table for the given table and columns
@@ -17,7 +17,7 @@ async function createFtsTable(tableName: string, columns: string[], tokenization
   console.log("🚀🩷🥰​ ~ file: fts.ts:17 ~ createFtsTable ~ internalName:", internalName);
   const stringColumns = columns.join(', ');
 
-  return await powerSync.writeTransaction(async (tx) => {
+  return await db.writeTransaction(async (tx) => {
     // Add FTS table
     await tx.execute(`
       CREATE VIRTUAL TABLE IF NOT EXISTS fts_${tableName}

@@ -174,14 +174,14 @@ export class SupabaseConnector
             `Could not update Supabase. Received error: ${result.error}`
           );
         }
-        console.log("🚀🩷🥰​ ~ file: Connector.ts:178 ~ uploadData ~ result:", result);
+        console.log("🚀🩷🥰 ~ file: Connector.ts:178 ~ uploadData ~ result:", result);
       }
       console.log(
-        "🚀🩷🥰​ ~ file: Connector.ts:108 ~ SupabaseConnector ~ uploadData ~ transaction ABOUT TO COMPLETE;"
+        "🚀🩷🥰 ~ file: Connector.ts:108 ~ SupabaseConnector ~ uploadData ~ transaction ABOUT TO COMPLETE;"
       );
       await transaction.complete();
       console.log(
-        "🚀🩷🥰​ ~ file: Connector.ts:108 ~ SupabaseConnector ~ uploadData ~ transaction COMPLETED;"
+        "🚀🩷🥰 ~ file: Connector.ts:108 ~ SupabaseConnector ~ uploadData ~ transaction COMPLETED;"
       );
     } catch (ex: unknown) {
       console.debug(ex);
