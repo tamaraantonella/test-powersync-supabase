@@ -1,4 +1,4 @@
-import { usePowerSync, usePowerSyncStatus, usePowerSyncWatchedQuery } from "@powersync/react";
+import { usePowerSync, usePowerSyncStatus } from "@powersync/react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./App.css";
@@ -11,8 +11,8 @@ function App() {
   const [pets, setPets] = useState<Pet[]>([]);
   const supabase = useSupabase();
   const status = usePowerSyncStatus();
-  const queue = usePowerSyncWatchedQuery("SELECT * FROM ps_crud");
-  console.log(queue);
+  //const queue = usePowerSyncWatchedQuery("SELECT * FROM ps_crud");
+
   const login = async () => {
     try {
       await supabase?.login("tamarafrazzetta@gmail.com", "admin123");
